@@ -1,0 +1,11 @@
+{
+    "methods": [
+        {
+            "class": "Book",
+            "method": "equals",
+            "startAt": "47",
+            "summary": "matches object with another",
+            "path": "D:\\JAVA\\java-unit-testing-with-junit-5-master\\src\\main\\java\\bookstoread\\Book.java"
+        }
+    ]
+}
