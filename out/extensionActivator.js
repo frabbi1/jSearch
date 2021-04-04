@@ -57,7 +57,7 @@ class ExtensionActivator {
         if (this.cwd) {
             fs_1.readFile(this.cwd.fsPath + '/res/index.json', 'utf-8', (e, content) => {
                 if (e) {
-                    vscode_1.window.showErrorMessage(e.message);
+                    vscode_1.window.showWarningMessage("Workspace indexing skipped!!");
                     return;
                 }
                 try {

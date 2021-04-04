@@ -45,6 +45,7 @@ class SearchContextMapper {
             try {
                 return yield new Promise((resolve, reject) => {
                     this.input.onDidAccept((e) => __awaiter(this, void 0, void 0, function* () {
+                        this.input.title = "Searching from the project... Please Wait...";
                         let value = this.input.value;
                         let inputs = [];
                         const len = this.methods.length;
@@ -61,6 +62,7 @@ class SearchContextMapper {
                         inputs.sort((a, b) => {
                             return b.score - a.score;
                         });
+                        this.input.title = "Searching Complete";
                         vscode_1.window.showQuickPick(inputs).then(item => {
                             if (item) {
                                 this.fileNavigator.navigate(item.startAt, item.path);

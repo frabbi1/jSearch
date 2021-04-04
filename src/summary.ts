@@ -2,11 +2,13 @@
 import fetch from 'node-fetch';
 import * as vscode from 'vscode';
 
+
+
 export class SummaryGen {
 
     constructor() {}
     run() {
-        let api = 'http://22656db1c55c.ngrok.io/summarize'
+        let api = 'http://bc466256de2f.ngrok.io/summarize'
         let bodyText = this.getSelectionText();
         let body = {
             method: bodyText
@@ -18,7 +20,12 @@ export class SummaryGen {
         }).then(res => res.text())
         .then((t) => {
             t = t.replace("<s>", "");
-            t = t.split('<')[0];
+            t = t.split("<UNK>").join(" ")
+            t = t.split("<NULL>").join("")
+            t = t.replace("</s>", "");
+
+
+            // t = t.split('<')[0];
             
 
             if(t.length > 0) {

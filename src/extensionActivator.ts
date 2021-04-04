@@ -57,7 +57,7 @@ export class ExtensionActivator {
         if(this.cwd){
             readFile(this.cwd.fsPath + '/res/index.json', 'utf-8', (e, content) => {
                 if(e) {
-                    window.showErrorMessage(e.message);
+                    window.showWarningMessage("Workspace indexing skipped!!");
                     return;
                 }
                 try {

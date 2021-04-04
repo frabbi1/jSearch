@@ -3,10 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SummaryGen = void 0;
 const node_fetch_1 = require("node-fetch");
 const vscode = require("vscode");
+String.prototype.se;
 class SummaryGen {
     constructor() { }
     run() {
-        let api = 'http://22656db1c55c.ngrok.io/summarize';
+        let api = 'http://bc466256de2f.ngrok.io/summarize';
         let bodyText = this.getSelectionText();
         let body = {
             method: bodyText
@@ -18,7 +19,10 @@ class SummaryGen {
         }).then(res => res.text())
             .then((t) => {
             t = t.replace("<s>", "");
-            t = t.split('<')[0];
+            t = t.split("<UNK>").join(" ");
+            t = t.split("<NULL>").join("");
+            t = t.replace("</s>", "");
+            // t = t.split('<')[0];
             if (t.length > 0) {
                 t = "Summary:\n" + t;
                 vscode.window.showInformationMessage(t);
