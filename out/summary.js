@@ -6,10 +6,12 @@ const vscode = require("vscode");
 class SummaryGen {
     constructor() { }
     run() {
+        let api = 'http://22656db1c55c.ngrok.io/summarize';
+        let bodyText = this.getSelectionText();
         let body = {
-            method: this.getSelectionText()
+            method: bodyText
         };
-        node_fetch_1.default('http://4bf0c8b4a33d.ngrok.io/summarize', {
+        node_fetch_1.default(api, {
             method: 'post',
             body: JSON.stringify(body),
             headers: { 'Content-Type': 'application/json' },
@@ -22,7 +24,31 @@ class SummaryGen {
                 vscode.window.showInformationMessage(t);
             }
             else {
-                vscode.window.showErrorMessage("Something Went Wrong! Try with another snippet");
+                if (bodyText && (bodyText === null || bodyText === void 0 ? void 0 : bodyText.length) > 100) {
+                    bodyText = bodyText === null || bodyText === void 0 ? void 0 : bodyText.slice(0, 100);
+                    let body = {
+                        method: bodyText
+                    };
+                    node_fetch_1.default(api, {
+                        method: 'post',
+                        body: JSON.stringify(body),
+                        headers: { 'Content-Type': 'application/json' },
+                    }).then(res => res.text())
+                        .then((t) => {
+                        t = t.replace("<s>", "");
+                        t = t.split('<')[0];
+                        if (t.length > 0) {
+                            t = "Summary:\n" + t;
+                            vscode.window.showInformationMessage(t);
+                        }
+                        else {
+                            vscode.window.showErrorMessage("Something Went Wrong! Try with another snippet");
+                        }
+                    });
+                }
+                else {
+                    vscode.window.showErrorMessage("Something Went Wrong! Try with another snippet");
+                }
             }
             // let myStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
             // myStatusBarItem.text = t;
